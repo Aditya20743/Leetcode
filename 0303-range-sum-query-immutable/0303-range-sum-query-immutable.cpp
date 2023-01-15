@@ -1,17 +1,21 @@
 class NumArray {
 public:
-    vector<int> v;
+    vector<int> presum;
     NumArray(vector<int>& nums) {
-        v=nums;
-        
+        vector<int> x(nums.size()+1);
+        x[0]=0;
+        for(int i=1;i<=nums.size();i++){
+            x[i]=x[i-1]+nums[i-1];
+        }
+        presum= x;
     }
     
     int sumRange(int left, int right) {
-        int sum=0;
-        for(int i=left;i<=right;i++){
-            sum+= v[i];
-        }
-        return sum;
+        // for(auto it: presum){
+        //     cout<<it<<" ";
+        // }
+        // cout<<endl;
+        return presum[right+1]-presum[left];
     }
 };
 
