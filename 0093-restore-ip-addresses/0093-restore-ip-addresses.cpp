@@ -11,6 +11,7 @@ public:
     }
     void solve(int idx, string &s, int parts, string str){
         
+        if(parts>4) return ;
         if(idx== n && parts==4){
             str.pop_back();
             res.push_back(str);
