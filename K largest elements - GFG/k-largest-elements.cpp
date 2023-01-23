@@ -18,12 +18,14 @@ class Solution
             mh.push(arr[i]);
             if(mh.size()>k) mh.pop();
         }
-        vector<int> v();
+        vector<int> v(k);
+        int i=k;
         while(!mh.empty()){
-            v.push_back(mh.top());
+            int temp= mh.top();
+            v[--i]=temp;
             mh.pop();
         }   
-        reverse(v.begin(),v.end());
+        
         return v;
     }
 };
