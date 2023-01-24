@@ -7,24 +7,24 @@ class Solution {
   public:
     vector<int> topK(vector<int>& nums, int k) {
         // Code here
-        sort(nums.begin(),nums.end());
+        priority_queue<pair<int,int>, vector<pair<int,int>>,
+        greater<pair<int,int>> > pq;
         map<int,int> mp;
         for(int i=0;i<nums.size();i++){
             mp[nums[i]]++;
+            //cout<<mp[nums[i]]<<" ";
+            
         }
-        vector<pair<int,int>> v;
-        for(auto it: mp){
-            pair<int,int>p;
-            p.first= it.second;
-            p.second= it.first;
-            v.push_back(p);
-        }
-        sort(v.begin(),v.end());
-        vector<int> ans;
         
-        for(int i=0;i<k;i++){
-            ans.push_back(v.back().second);
-            v.pop_back();
+        for(auto it: mp){
+            //cout<<it.first<<"- "<<it.second<<endl;
+            pq.push({it.second,it.first});
+            if(pq.size()>k) pq.pop();
+        }
+        vector<int>ans(k);
+        while(!pq.empty()){
+            ans[--k]=(pq.top().second);
+            pq.pop();
         }
         return ans;
     }
