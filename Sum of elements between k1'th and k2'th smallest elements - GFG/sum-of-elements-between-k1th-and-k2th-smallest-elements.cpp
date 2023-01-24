@@ -12,9 +12,7 @@ class Solution{
         long long sum=0,sum2=0;
         for(int i=0;i<N;i++){
             mh.push(A[i]);
-            sum+= A[i];
             if(mh.size()>K1){
-                sum-= mh.top();
                 mh.pop();
             }
         }
@@ -25,9 +23,7 @@ class Solution{
         
         for(int i=0;i<N;i++){
             mh.push(A[i]);
-            sum2+= A[i];
             if(mh.size()>K2-1){
-                sum2-= mh.top();
                 mh.pop();
             }
         }
@@ -35,7 +31,7 @@ class Solution{
             sum2+= mh.top();
             mh.pop();
         }
-        long long ans= (sum2-sum)/2;
+        long long ans= (sum2-sum);
         return ans;
         
     }
