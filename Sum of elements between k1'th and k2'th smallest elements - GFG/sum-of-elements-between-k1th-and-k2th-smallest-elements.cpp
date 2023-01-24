@@ -8,12 +8,36 @@ class Solution{
     long long sumBetweenTwoKth( long long A[], long long N, long long K1, long long K2)
     {
         // Your code goes here
-        sort(A,A+N);
-        long long sum=0;
+        priority_queue<long long> mh;
+        long long sum=0,sum2=0;
         for(int i=0;i<N;i++){
-            if(i>K1-1 && i< K2-1) sum+= A[i];
+            mh.push(A[i]);
+            sum+= A[i];
+            if(mh.size()>K1){
+                sum-= mh.top();
+                mh.pop();
+            }
         }
-        return sum;
+        while(!mh.empty()){
+            sum+= mh.top();
+            mh.pop();
+        }
+        
+        for(int i=0;i<N;i++){
+            mh.push(A[i]);
+            sum2+= A[i];
+            if(mh.size()>K2-1){
+                sum2-= mh.top();
+                mh.pop();
+            }
+        }
+        while(!mh.empty()){
+            sum2+= mh.top();
+            mh.pop();
+        }
+        long long ans= (sum2-sum)/2;
+        return ans;
+        
     }
 };
 
