@@ -11,34 +11,30 @@ class Solution
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // Code here
-        priority_queue< pair<int,int> , vector<pair<int,int>>,
-        greater<pair<int,int>> > minh;
-        
+        set<pair<int,int>> st;
         vector<int> dis(V,INT_MAX);
         dis[S]=0;
-        minh.push({0,S});
         
+        st.insert({0,S});
         
-        
-        while(!minh.empty()){
-            int dist= minh.top().first;
-            int node=minh.top().second;
-            minh.pop();
+        while(!st.empty()){
+            auto it= *(st.begin());
+            int dist= it.first;
+            int node= it.second;
+            st.erase({dist,node});
             
             for(auto it: adj[node]){
                 int edgeW= it[1];
                 int edgeN= it[0];
-                
-                if(dist+ edgeW< dis[edgeN]){
-                    dis[edgeN]= dist+ edgeW;
-                    minh.push({dis[edgeN], edgeN});
+                if(edgeW+ dist < dis[edgeN]){
+                    if(dis[edgeN]!= INT_MAX)    st.erase({dis[edgeN],edgeN});
+                    dis[edgeN]= edgeW+ dist;
+                    st.insert({dis[edgeN],edgeN});
                 }
             }
         }
-            
         return dis;
-            
-        }
+    }
 };
 
 
