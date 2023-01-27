@@ -18,18 +18,18 @@ class Solution {
         
         vector<int> dis(N);
         for(int i=0;i<N;i++)    dis[i]=INT_MAX;
-        queue<pair<int,int>> q;
-        q.push({src,0});
+        queue<int> q;
+        q.push(src);
         dis[src]=0;
         
         while(!q.empty()){
-            int node= q.front().first;
-            int dst= q.front().second;
+            int node= q.front();
+            
             q.pop();
             for(auto it: adj[node]){
                 if(dis[node]+1< dis[it]){
                     dis[it]= dis[node]+1;
-                    q.push({it,dis[it]});
+                    q.push(it);
                     }
             }
         }
