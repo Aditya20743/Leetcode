@@ -26,6 +26,8 @@ class Solution {
             int hx= minh.top().second.first;
             int hy= minh.top().second.second;
             
+            if(hx== n-1 && hy== m-1)    return effort;
+            
             minh.pop();
             for(int i=0;i<4;i++){
                 int nhx= hx+ dir[i];
@@ -42,7 +44,7 @@ class Solution {
             }
             
         }
-        return eff[n-1][m-1]== INT_MAX? 0: eff[n-1][m-1];
+        return 0;
     }
 };
 
