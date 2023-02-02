@@ -4,7 +4,7 @@ public:
         int m= grid.size();
         int n= grid[0].size();
         vis[r][c]=1;
-        grid[r][c]=2;
+        grid[r][c]=1;
         int dir[5]={-1,0,1,0,-1};
         
         for(int i=0;i<4;i++){
@@ -26,7 +26,6 @@ public:
             for(int j=0;j<n;j++){
                 if(grid[i][j]==0 && ((i== m-1) || (i==0) || (j== 0) || (j== n-1) )){
                     dfs(i,j,vis,grid);
-                    //grid[i][j]=1;
                 }
             }
         }
