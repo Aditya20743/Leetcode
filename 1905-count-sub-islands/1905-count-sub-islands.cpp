@@ -5,7 +5,6 @@ public:
         int n=grid2.size();
         int m=grid2[0].size();
         vis[r][c]=1;
-        if(grid1[r][c]==0)   f= false;
         int dir[5]={-1,0,1,0,-1};
         
         for(int i=0;i<4;i++){
@@ -15,7 +14,7 @@ public:
             if(nr>=0 && nr< n && nc>=0 && nc< m){
                 if(!vis[nr][nc] && grid2[nr][nc]==1 ){
                     dfs(nr,nc,vis,grid1,grid2,f);
-                    if(grid1[nr][nc]==0 ){
+                    if(grid1[nr][nc]==0 && f==true){
                         f= false;
                     }
                 }
@@ -35,7 +34,6 @@ public:
                     dfs(i,j,vis,grid1,grid2,f);
                     if(f==true){
                         subIsland++;
-                        f=true;
                     }
                 }
             }
