@@ -7,22 +7,13 @@ public:
         while(r< fruits.size()){
             mp[fruits[r]]++;
             while(mp.size()>2){
-                cout<<"w";
-                
                 mp[fruits[l]]--;
-                if(mp[fruits[l]]==0)   { mp.erase(fruits[l]); cout<<"r"; cout<<mp.size();}
+                if(mp[fruits[l]]==0)   { mp.erase(fruits[l]);}
                 l++;
             }
-            
-                maxi=max(maxi,r-l+1); 
-                //mp[fruits[r]]++;
-                
-                r++;
-                //mp[fruits[r]]++;
-                cout<<"l";
-            
+            maxi=max(maxi,r-l+1); 
+            r++;
         }
-        cout<<endl;
         return maxi;
     }
 };
