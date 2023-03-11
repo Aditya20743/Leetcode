@@ -1,56 +1,54 @@
 class Solution {
 public:
     bool isSafe(int row,int col,vector<string>&board,int n){
-        int dr=row;
-        int dc=col;
-        // left side check in row
+        int dr= row, dc= col;
+        // left
         while(dc>=0){
             if(board[dr][dc]=='Q'){
                 return false;
             }
             dc--;
         }
-        // check upper diagonal
-        dr=row;
-        dc=col;
-        while(dr>=0 && dc>=0){
+        dr= row, dc=col;
+        //upper diagonal
+        while(dc>=0 && dr>=0){
             if(board[dr][dc]=='Q'){
                 return false;
             }
-            dr--; dc--;
+            dc--;  dr--;
         }
-        dr=row; dc=col;
-        while(dr<n && dc>=0){
+        dr= row, dc=col;
+        //lower diagonal
+        while(dc>=0 && dr<n){
             if(board[dr][dc]=='Q'){
                 return false;
             }
-            dr++; dc--;
+            dc--;  dr++;
         }
         return true;
+        
     }
     
-    void solve(int col, vector<string>&board, vector<vector<string>>&ans,int n){
+    void solve(vector<string>&board,vector<vector<string>>&ans, int n, int col ){
         if(col==n){
             ans.push_back(board);
-            return;
+            return ;
         }
         for(int row=0;row<n;row++){
             if(isSafe(row,col,board,n)){
                 board[row][col]='Q';
-                solve(col+1,board,ans,n);
+                solve(board,ans,n,col+1);
                 board[row][col]='.';
             }
         }
     }
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> ans;
-        
-        vector<string> board;
         string s(n,'.');
-        for(int i=0;i<n;i++){
-            board.push_back(s);
-        }
-        solve(0,board,ans,n);
+        vector<string> board;
+        for(int i=0;i<n;i++)    board.push_back(s);
+        
+        solve(board,ans,n,0);
         return ans;
     }
 };
