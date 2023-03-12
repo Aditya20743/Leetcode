@@ -10,30 +10,38 @@
  */
 class Solution {
 public:
-    // IN min heap we use to write greater while declaring so greater cmp
     struct cmp{
-        bool operator() (ListNode* a, ListNode* b){
-            return a->val > b->val;
+        bool operator()(ListNode* a,ListNode* b){
+        return a->val > b->val;
         }
     };
+    
+        
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<ListNode* , vector<ListNode*> , cmp > maxheap;
-        ListNode* dummy=new ListNode(-1);
-        ListNode* tail= dummy;
-        
-        for(int i=0;i<lists.size();i++){
-            if(lists[i]!= NULL)
-            maxheap.push(lists[i]);
+        priority_queue<ListNode*, vector<ListNode*> , cmp > pq;
+        for(auto it: lists){
+            if(it)
+            pq.push(it);
         }
-        
-        while(!maxheap.empty()){
-            ListNode* temp= maxheap.top();
-            tail->next= temp;
-            tail= temp;
-            maxheap.pop();
-            if(temp->next)  maxheap.push(temp->next);
+        if(pq.empty()){
+            return NULL;
         }
-        return dummy->next;
+        ListNode* head= pq.top();
+        ListNode* start= head;
+        pq.pop();
+        if(head->next)
+            pq.push(head->next);
         
+        
+        while(!pq.empty()){
+            ListNode* top= pq.top();
+            //ans.push_back(top->val);
+            head->next = top;
+            head= head->next;
+            pq.pop();
+            if(top->next)
+                pq.push(top->next);
+        }
+        return start;
     }
 };
