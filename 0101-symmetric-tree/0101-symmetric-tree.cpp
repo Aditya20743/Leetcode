@@ -11,28 +11,19 @@
  */
 class Solution {
 public:
-    void right(TreeNode* root,vector<int>&v){
-        if(!root)   {v.push_back(111);  return;}
-        v.push_back(root->val);
-    
-        right(root->right, v);
-        left(root->left, v);
+    bool check(TreeNode* p, TreeNode* q){
+        if(!p && !q)    return true;
+        else if(!p || !q)    return false;
+        if(p->val != q->val)    return false;
         
-    }
-    void left(TreeNode* root,vector<int>&v){
-        if(!root)   {v.push_back(111);  return;}
-        v.push_back(root->val);
-        
-        left(root->left, v);
-        right(root->right, v);
+        return check(p->left,q->right) && check(p->right,q->left);
         
     }
     bool isSymmetric(TreeNode* root) {
-        vector<int> leftside, rightside;
-        if(root){
-            left(root,leftside);
-            right(root,rightside);
+        if(!root)   return true;
+        if(check(root->left, root->right)==false){
+            return false;
         }
-        return leftside == rightside ;
+        return true;
     }
 };
