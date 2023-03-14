@@ -19,50 +19,47 @@ public:
     
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
+        // dp[day][state][capacity]  -- max profit in such case.
+        
         vector<vector<vector<int>>> dp(n+1,
             vector<vector<int>>(2,vector<int>(3,0)));
-        //return helper(0,1,prices, 2,dp);
+        
+        //return helper(0,1,prices, 2,dp);   memoization soln function
+        
         for(int k=0;k<3;k++){
             dp[0][0][k]=0;
             dp[n][1][k]=0;
             dp[n][0][k]=0;
         }
         
+        // base case states the values to be zero which are already there in this case as we are initializing the dp with 0 so no need to write such conditions
+        
+        
         for(int i=n-1;i>=0;i--){
+            
             for(int j=0;j<2;j++){
-                for(int k=0;k<3;k++){
+                
+                for(int k=1;k<3;k++){
+                    // k=0 all values are 0 so, we dont consider it, even if we consider it nothing changes.
+                    
                     if(j){
                         dp[i][j][k]= max(dp[i+1][0][k]- prices[i], dp[i+1][1][k]);
                     }
                     else{
-                        if(k>=1){
-                            dp[i][j][k]= max(dp[i+1][1][k-1]+ prices[i], 
+                        
+                            // when we sell, we are left with 1 less than earlier case.
+                        dp[i][j][k]= max(dp[i+1][1][k-1]+ prices[i], 
                                             dp[i+1][0][k]);
-                        }
-                        else{
-                            dp[i][j][k]= dp[i+1][0][k];
-                        }
                     }
                 }
             }
         }
-//         int ans=0;
-            
-//         for(int k=0;k<3;k++){
-//             ans= max(dp[0][1][k], ans);
-//         }
+
         return dp[0][1][2];
-        
+        // started with 1st day, buy stock, and 2 transactions.
         
         
     }
     
-//     int maxProfit(vector<int>&p){
-//         int n=prices.size();
-//         int mini= prices[0];
-//         int ans=0, count=0;
-//         for(int i=0;i<n;i++){
-            
-//         }
-//     }
+
 };
