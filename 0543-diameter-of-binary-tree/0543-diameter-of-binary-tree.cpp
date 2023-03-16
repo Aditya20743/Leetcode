@@ -14,17 +14,18 @@ public:
     int maxi=0;
     int height(TreeNode* t){
         if(!t)  return 0;
-        return 1+max( height(t->left),height(t->right));
+        return 1+max(height(t->left),height(t->right));
     }
     int diameterOfBinaryTree(TreeNode* root) {
         if(!root)   return 0;
-        
         int lh= height(root->left);
         int rh= height(root->right);
-        maxi=max(maxi,lh+rh);
+        
+        maxi=max(lh+rh, maxi);
         
         diameterOfBinaryTree(root->left);
         diameterOfBinaryTree(root->right);
+        
         return maxi;
     }
 };
