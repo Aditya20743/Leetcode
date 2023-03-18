@@ -1,9 +1,9 @@
 class Solution {
 public:
-    static bool comp(pair<long long,long long>&a,pair<long long,long long>&b){
-        if(a.first==b.first)return a.second<b.second;
-        return a.first<b.first;
-    }
+    // static bool comp(pair<long long,long long>&a,pair<long long,long long>&b){
+    //     if(a.first==b.first)return a.second<b.second;
+    //     return a.first<b.first;
+    // }
     #define ll long long
     long long findScore(vector<int>& nums) {
         vector<pair<ll,ll>> v(nums.size());
@@ -13,7 +13,7 @@ public:
         
         vector<ll> unm(nums.size(),0);
         
-        sort(v.begin(),v.end(),comp);
+        sort(v.begin(),v.end());
         
         ll idx=0,c=0,ans=0;
         while( idx< nums.size()){
