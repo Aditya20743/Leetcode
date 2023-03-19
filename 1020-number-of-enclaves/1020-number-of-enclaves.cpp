@@ -1,45 +1,41 @@
 class Solution {
 public:
-    void dfs(int r,int c, vector<vector<int>>&vis,
-             vector<vector<int>>&grid){
-        
-        int n=grid.size();
-        int m= grid[0].size();
+    void dfs(int r,int c, vector<vector<int>>&grid, vector<vector<int>>&vis){
+        int m= grid.size();
+        int n= grid[0].size();
         
         vis[r][c]=1;
-        
-        int dir_r[4]={0,1,0,-1};
-        int dir_c[4]={1,0,-1,0};
+        int dir[5]={-1,0,1,0,-1};
         
         for(int i=0;i<4;i++){
-            int newrow= r + dir_r[i];
-            int newcol= c + dir_c[i];
+            int nr= dir[i]+ r;
+            int nc= c+ dir[i+1];
             
-            if(newrow>=0 && newrow<n && newcol>=0 && newcol<m){
-                if(!vis[newrow][newcol] && grid[newrow][newcol]==1){
-                    dfs(newrow,newcol,vis,grid);
+            if(nr>=0 && nr<m && nc>=0 && nc<n){
+                if(grid[nr][nc]==1 && vis[nr][nc]==0){
+                    dfs(nr,nc, grid,vis);
                 }
             }
         }
     }
     int numEnclaves(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m= grid[0].size();
-        vector<vector<int>> vis(n,vector<int>(m,0));
+        int m= grid.size();
+        int n= grid[0].size();
         
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if( (j==0 || j== m-1 ||i==0 || i== n-1) &&
-                   !vis[i][j] && grid[i][j]==1){
-                    dfs(i,j,vis,grid);
+        vector<vector<int>>vis(m,vector<int>(n,0));
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1 && (i==0 || j==0 || i==m-1 || j==n-1)){
+                    dfs(i,j,grid,vis);
                 }
             }
         }
-        
         int count=0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if( !vis[i][j] && grid[i][j]==1){
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1 && vis[i][j]==0){
                     count++;
                 }
             }
@@ -47,3 +43,31 @@ public:
         return count;
     }
 };
+
+// class Solution {
+// public:
+    
+    
+//     void solve(vector<vector<char>>& board) {
+//         int m= board.size();
+//         int n= board[0].size();
+        
+//         vector<vector<int>>vis(m,vector<int>(n,0));
+        
+//         for(int i=0;i<m;i++){
+//             for(int j=0;j<n;j++){
+//                 if(board[i][j]=='O' && (i==0 || j==0 || i==m-1 || j==n-1)){
+//                     dfs(i,j,board,vis);
+//                 }
+//             }
+//         }
+        
+//         for(int i=0;i<m;i++){
+//             for(int j=0;j<n;j++){
+//                 if(board[i][j]=='O' && vis[i][j]==0){
+//                     board[i][j]='X';
+//                 }
+//             }
+//         }
+//     }
+// };
