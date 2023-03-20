@@ -15,26 +15,26 @@ class Solution {
             adj[edges[i][0]].push_back(edges[i][1]);
             adj[edges[i][1]].push_back(edges[i][0]);
         }
-        
-        vector<int> dis(N);
-        for(int i=0;i<N;i++)    dis[i]=INT_MAX;
+        vector<int> dis(N,1e9);
+        dis[src]=0;
         queue<int> q;
         q.push(src);
-        dis[src]=0;
         
         while(!q.empty()){
             int node= q.front();
-            
             q.pop();
+            
             for(auto it: adj[node]){
-                if(dis[node]+1< dis[it]){
-                    dis[it]= dis[node]+1;
+                if(dis[it]> dis[node]+ 1){
+                    dis[it]= dis[node]+ 1;
                     q.push(it);
-                    }
+                }
             }
         }
         for(int i=0;i<N;i++){
-            if(dis[i]==INT_MAX) dis[i]=-1;
+            if(dis[i]==1e9){
+                dis[i]=-1;
+            }
         }
         return dis;
     }
