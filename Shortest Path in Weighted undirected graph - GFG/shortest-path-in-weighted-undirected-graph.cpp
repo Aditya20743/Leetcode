@@ -8,51 +8,46 @@ class Solution {
     vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
         // Code here
         vector<pair<int,int>> adj[n+1];
+        vector<int> dis(n+1,INT_MAX), parent(n+1,INT_MAX);
+        for(int i=1;i<=n;i++){
+            parent[i]=i;
+        }
         
-            for(auto it: edges){
-                adj[it[0]].push_back({it[1],it[2]});
-                adj[it[1]].push_back({it[0],it[2]});
-            }
+        for(int i=0;i<m;i++){
+            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
+            adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
+        }
         
-        
-        priority_queue<pair<int,int>, vector<pair<int,int>>,
-        greater<pair<int,int>> > minh;
-        minh.push({0,1});
-        
-        vector<int> dis(n+1,INT_MAX);
+        priority_queue< pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > pq;
         dis[1]=0;
-        vector<int> parent(n+1);
-        for(int i=1;i<n+1;i++)  parent[i]=i;
         
-        while(!minh.empty()){
-            int dist= minh.top().first;
-            int node= minh.top().second;
-            minh.pop();
+        pq.push({0,1});
+        
+        while(!pq.empty()){
+            int node= pq.top().second;
+            int distance= pq.top().first;
+            pq.pop();
             
             for(auto it: adj[node]){
-                int edgeW= it.second;
-                int edgeN= it.first;
-                if(edgeW+ dist < dis[edgeN]){
-                    dis[edgeN]= edgeW+ dist;
-                    parent[edgeN]= node;
-                    minh.push({dis[edgeN],edgeN});
+                int adjn= it.first;
+                int adjw= it.second;
+                
+                if(dis[adjn]> adjw + distance){
+                    dis[adjn]= adjw + distance;
+                    pq.push({dis[adjn],adjn});
+                    parent[adjn]= node;
                 }
             }
         }
+        if(dis[n]== INT_MAX)    return {-1};
+        int node=n;
         vector<int> path;
-        if(dis[n]== INT_MAX)    
-            return {-1};
-        else{
-            
-        while(parent[n]!=n){
-            path.push_back(n);
-            n= parent[n];
+        while(parent[node]!= node){
+            path.push_back(node);
+            node= parent[node];
         }
-        path.push_back(1);
+        path.push_back(node);
         reverse(path.begin(),path.end());
-            
-        }
-        
         return path;
         
     }
