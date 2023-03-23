@@ -13,24 +13,23 @@ class Solution {
     int minimumMultiplications(vector<int>& arr, int start, int end) {
         // code here
         queue<pair<int,int>> q;
-        q.push({start,0});
-        int mod= 100000;
-        vector<int> dist(100000,INT_MAX);
-        dist[start]=0;
+        vector<int> steps(1e5+1,INT_MAX);
+        steps[start]=0;
+        int mod= 1e5;
+        q.push({0,start});
         
         while(!q.empty()){
-            int node= q.front().first;
-            int steps= q.front().second;
+            int step= q.front().first;
+            int no= q.front().second;
+            if(no== end)    return step;
             q.pop();
             
             for(auto it: arr){
-                int num= (it* node) % mod;
-                if(steps+1< dist[num]){
-                    dist[num]= steps+1;
-                    if(num== end)   return steps+1;
-                    q.push({num,steps+1});
+                int newno= (it* no)%mod;
+                if(steps[newno]> step+1){
+                    steps[newno]= step+1;
+                    q.push({steps[newno],newno});
                 }
-                
             }
         }
         return -1;
