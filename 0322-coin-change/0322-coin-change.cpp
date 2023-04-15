@@ -17,10 +17,23 @@ public:
         
     }
     int coinChange(vector<int>& coins, int amount) {
-        int n= coins.size()-1;
-        vector<vector<int>> dp(n+1,vector<int>(amount+1,-1));
         
-        return helper(coins,n,amount, dp) >= 1e9 ? -1: helper(coins,n,amount, dp);
-       
+        int n=coins.size();
+        vector<vector<int>> dp(n,vector<int>(amount+1,0));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=amount;j++){
+                if(i==0){
+                    if(j%coins[i]==0)   dp[i][j]=j/coins[i];
+                    else dp[i][j]=1e9;
+                }
+                else{
+                int take =INT_MAX;
+                int notTake= dp[i-1][j];
+                if(j>=coins[i])  take= dp[i][j-coins[i]]+1;
+                dp[i][j]=min(take,notTake); 
+                } 
+            }
+        }
+        return dp[n-1][amount]>=1e9 ? -1 : dp[n-1][amount]; 
     }
 };
