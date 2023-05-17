@@ -8,23 +8,36 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+// start->val + end->val
 class Solution {
 public:
     int pairSum(ListNode* head) {
-        ListNode* temp= new ListNode(-1);
-        ListNode* curr= head; 
-        temp->next= curr;
+        ListNode* slow= head->next;
+        ListNode* fast= head->next->next; 
         
-        vector<int> v;
-        
-        while(curr){
-            v.push_back(curr->val);
-            curr= curr->next;
+        int n=1;
+        while(fast!= NULL){
+            n++;
+            slow=slow->next;
+            fast=fast->next->next;
         }
-        int maxi=INT_MIN;
+        // slow ptr reached middle
         
-        for(int i=0;i<=v.size()/2 - 1;i++){
-            maxi= max(v[i]+ v[v.size()-1-i] , maxi);
+        ListNode* prev= NULL, *curr= slow;
+        
+        while(slow!= NULL){
+            slow= curr-> next;
+            curr->next= prev;
+            prev= curr;
+            curr= slow;
+        }
+        int maxi= INT_MIN;
+        
+        while(n--){
+            maxi= max(head->val + prev->val, maxi);
+            head=head->next;
+            prev=prev->next;
         }
         return maxi;
     }
