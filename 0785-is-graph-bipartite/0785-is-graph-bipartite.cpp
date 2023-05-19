@@ -30,7 +30,7 @@ public:
         
         for(auto it: graph[node]){
             if(!vis[it]){
-                if(dfs(it,graph,vis,col,!color)==false) return false;
+                if(dfs(it,graph,vis,col,-color)==false) return false;
             }
             else if(vis[it]==1 && col[it]== color){
                 return false;
