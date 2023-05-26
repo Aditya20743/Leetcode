@@ -1,31 +1,30 @@
 class Solution {
 public:
-    //1 - buy 
-    //0- sell
-    int helper(int i, int state, vector<int>& prices,vector<vector<int>>&dp ){
-        if(i== prices.size())   return 0;
-        if(dp[i][state]!=-1)    return dp[i][state];
-        if(state){
-            return dp[i][state]= max( -prices[i]+ helper(i+1,0,prices,dp), helper(i+1,1,prices,dp));
+    int helper(int i, vector<int>&prices, int s,vector<vector<int>>&dp){
+        if(i== prices.size()){
+            return 0;
+        }
+        int sell =0, not_sell =0;
+        
+        if(dp[i][s]!= -1)   return dp[i][s];
+        
+        if(s==0){
+            
+            int buy= -prices[i]+ helper(i+1 ,prices, 1,dp);
+            int not_buy= helper(i+1, prices, 0,dp);
+            
+            return dp[i][0]=max(buy,not_buy);
         }
         else{
-            return dp[i][state]= max( +prices[i]+ helper(i+1,1,prices,dp), helper(i+1,0,prices,dp));
+            sell= prices[i]+ helper(i+1,prices, 0,dp);
+            not_sell= helper(i+1, prices, 1,dp);
         }
+        return dp[i][1]=max(sell,not_sell);
     }
+    
     int maxProfit(vector<int>& prices) {
-        vector<vector<int>> dp(prices.size()+1, vector<int>(2,0));
-        dp[prices.size()][0]=0;
-        dp[prices.size()][1]=0;
-        dp[0][0]=0;
-        int n= prices.size();
-        for(int i=n-1;i>=0;i--){
-            for(int j=0;j<2;j++){
-                if(j)
-                    dp[i][j]= max(dp[i+1][0]-prices[i], dp[i+1][1]);
-                else 
-                    dp[i][j]= max(dp[i+1][1]+prices[i], dp[i+1][0]);
-            }
-        }
-        return dp[0][1];
+        // 0 -> buy     1-> Sell
+        vector<vector<int>> dp(prices.size(),vector<int>(2,-1));
+        return helper(0,prices,0,dp);
     }
 };
