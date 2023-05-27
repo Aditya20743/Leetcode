@@ -10,30 +10,36 @@ class Solution {
   public:
     vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
         // code here
-        vector<int> adj[N];
-        for(int i=0;i<M;i++){
-            adj[edges[i][0]].push_back(edges[i][1]);
-            adj[edges[i][1]].push_back(edges[i][0]);
+        vector<vector<int>> adj(N);
+        for(auto it: edges){
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
         }
-        vector<int> dis(N,1e9);
+        
+        vector<int>dis(N,101), vis(N,0);
+        
         dis[src]=0;
+        
         queue<int> q;
         q.push(src);
         
         while(!q.empty()){
             int node= q.front();
+            vis[node]=1;
             q.pop();
             
             for(auto it: adj[node]){
-                if(dis[it]> dis[node]+ 1){
-                    dis[it]= dis[node]+ 1;
-                    q.push(it);
+                if(!vis[it]){
+                    if(dis[it]> dis[node]+1){
+                        dis[it]= dis[node]+1;
+                        q.push(it);
+                    }
                 }
             }
         }
         for(int i=0;i<N;i++){
-            if(dis[i]==1e9){
-                dis[i]=-1;
+            if(dis[i]== 101){
+                dis[i]= -1;
             }
         }
         return dis;
