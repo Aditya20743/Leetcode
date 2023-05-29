@@ -1,45 +1,47 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<vector<int>> adj[n];
+        
+        vector<vector<pair<int,int>>> adj(n);
+        
         for(int i=0;i<flights.size();i++){
-            adj[flights[i][0]].push_back({flights[i][1],flights[i][2]});
-        }
-        vector<int> dis(n,INT_MAX);
-        dis[src]= 0;
-        
-        queue<pair<int,pair<int,int>>> q;
-        q.push({0,{src,0}});
-        
-        while(!q.empty()){
-            int node= q.front().second.first;
-            int steps= q.front().first;
-            int distance= q.front().second.second;
-            q.pop();
+            int a= flights[i][0];
+            int b= flights[i][1];
+            int p= flights[i][2];
             
+            adj[a].push_back({b,p});
+        }
+        
+        
+        vector<vector<int>> prices(n,vector<int>(n+2,INT_MAX));
+        prices[src][0]=0;
+        
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > pq;
+        
+        pq.push({0,src});
+        
+        while(!pq.empty()){
+            int node = pq.top().second;
+            int trips= pq.top().first;
+            pq.pop();
+            
+            // if(trips == k+3)  break;
             for(auto it: adj[node]){
-                int adjn= it[0];
-                int adjW= it[1];
+                int adjNode=  it.first;
+                int EdgeW= it.second;
                 
-                if(steps<k+1 &&  dis[adjn] > distance+ adjW){
-                    dis[adjn]= distance + adjW;
-                    q.push({steps+1,{adjn,dis[adjn]}});
+                
+                if(trips<k+1 && prices[adjNode][trips+1] > prices[node][trips] + EdgeW){
+                    prices[adjNode][trips+1] = prices[node][trips] + EdgeW;
+                    pq.push({trips+1, adjNode});
                 }
             }
         }
-        //int ans= INT_MAX;
-        
-        // for(int i=0;i<n;i++){
-        //     for(int j=0;j<k+2;j++){
-        //         cout<<dis[i][j]<<" ";
-        //     }
-        //     cout<<endl;
-        // }
-        // for(int i=0;i<=k+1;i++){
-        //     if(dis[dst][i] != INT_MAX){
-        //         ans= min(ans,dis[dst][i]);
-        //     }
-        // }
-        return dis[dst] == INT_MAX ? -1 : dis[dst]; 
+        int mini=INT_MAX;
+        for(int j=0;j<=min(k+1,n);j++){
+            mini= min(mini, prices[dst][j]);
+        }
+            
+        return mini==INT_MAX ? -1: mini;
     }
 };
