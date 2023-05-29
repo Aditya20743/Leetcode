@@ -31,7 +31,7 @@ public:
                 int EdgeW= it.second;
                 
                 
-                if(trips<k+1 && prices[adjNode][trips+1] > prices[node][trips] + EdgeW){
+                if(trips<n+1 && prices[adjNode][trips+1] > prices[node][trips] + EdgeW){
                     prices[adjNode][trips+1] = prices[node][trips] + EdgeW;
                     pq.push({trips+1, adjNode});
                 }
