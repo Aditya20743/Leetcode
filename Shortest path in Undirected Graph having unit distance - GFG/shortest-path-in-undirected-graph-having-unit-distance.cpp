@@ -11,35 +11,35 @@ class Solution {
     vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
         // code here
         vector<vector<int>> adj(N);
-        for(auto it: edges){
-            adj[it[0]].push_back(it[1]);
-            adj[it[1]].push_back(it[0]);
+        
+        for(int i=0;i<M;i++){
+            adj[edges[i][0]].push_back(edges[i][1]);
+            adj[edges[i][1]].push_back(edges[i][0]);
         }
-        
-        vector<int>dis(N,101), vis(N,0);
-        
+        vector<int>vis(N,0), dis(N,INT_MAX);
+        vis[src]=1;
         dis[src]=0;
-        
-        queue<int> q;
-        q.push(src);
+        queue<pair<int,int>> q;
+        q.push({src,0});
         
         while(!q.empty()){
-            int node= q.front();
-            vis[node]=1;
+            int nd= q.front().first;
+            int step= q.front().second;
+            
             q.pop();
             
-            for(auto it: adj[node]){
+            for(auto it: adj[nd]){
                 if(!vis[it]){
-                    if(dis[it]> dis[node]+1){
-                        dis[it]= dis[node]+1;
-                        q.push(it);
-                    }
+                    q.push({it,step+1});
+                    vis[it]=1;
+                    dis[it]=step+1;
                 }
             }
         }
+        
         for(int i=0;i<N;i++){
-            if(dis[i]== 101){
-                dis[i]= -1;
+            if(dis[i]==INT_MAX){
+                dis[i]=-1;
             }
         }
         return dis;
