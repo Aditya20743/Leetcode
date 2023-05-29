@@ -1,51 +1,51 @@
 class Solution {
 public:
-    #define ll long long 
+    
+    /*
+    intution- 1. find shortest distance then count how many times we can reach 0 - n-1
+    */
+    long long mod= 1e9+7;
     int countPaths(int n, vector<vector<int>>& roads) {
-        vector<vector<ll >>adj[n];
-        long long mod=1e9+7;
-        vector<int> ways(n,0);
+        vector<vector<pair<long long,long long>>> adj(n);
+        
         for(int i=0;i<roads.size();i++){
-            adj[roads[i][0]].push_back({roads[i][1],roads[i][2]});
-            adj[roads[i][1]].push_back({roads[i][0],roads[i][2]});
+            adj[roads[i][0]].push_back({roads[i][1], roads[i][2]});
+            adj[roads[i][1]].push_back({roads[i][0], roads[i][2]});
         }
         
-        priority_queue<pair<ll,ll>, vector<pair<ll,ll>> , greater<pair<ll,ll>> > pq;
+        vector<long long> time(n,1e18);
+        vector<long long> ways(n,0);
+        
+        priority_queue<pair<long long,long long>, vector<pair<long long,long long>>, greater<pair<long long,long long>> > pq;
         pq.push({0,0});
         ways[0]=1;
-        
-        vector<ll> time(n,1e18);
-       
+        time[0]=0;
+
         
         while(!pq.empty()){
-            ll currtime= pq.top().first;
-            ll node= pq.top().second;
+            long long curr_time= pq.top().first;
+            long long node= pq.top().second;
             pq.pop();
             
             for(auto it: adj[node]){
-                ll newtime= it[1];
-                ll adjn= it[0];
+                long long nd= it.first;
+                long long t= it.second;
+                
+                if(time[nd]> t+ curr_time){
+                    time[nd]= t+ curr_time;
+                    ways[nd]= ways[node];
+                    pq.push({time[nd],nd});
+                }
+                
+                else if( time[nd]== t + curr_time ){
+                    // time[nd]= t+ curr_time;
+                    ways[nd]= (ways[nd]+ ways[node])%mod;
+                }
                 
                 
-                if(time[adjn]> currtime+newtime){
-                    time[adjn]= currtime+ newtime;
-                    pq.push({time[adjn],adjn});
-                    ways[adjn]= ways[node]%mod;
-                }
-                else if(time[adjn] == currtime+ newtime){
-                    ways[adjn]=(ways[adjn]+ ways[node])%mod;
-                }
-                // if(adjn==n-1 ){
-                //     if(time[adjn]< mintime){
-                //         count=1;
-                //         mintime= min(time[adjn],mintime);
-                //     }
-                //     else if(time[adjn]== mintime){
-                //         count++;
-                //     }
-                // }
             }
         }
         return ways[n-1]%mod;
+
     }
 };
