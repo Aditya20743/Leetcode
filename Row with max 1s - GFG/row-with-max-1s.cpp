@@ -8,21 +8,20 @@ class Solution{
 public:
 	int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
 	    // code here
-	    int c=0,maxi=0;
-	    int idx=-1;
-	    for(int i=0;i<n;i++){
-	        c=0;
-	        for(int j=0;j<m;j++){
-	            if(arr[i][j]==1)  c++;
+	    int r= 0;
+	    int c= m-1;
+	    int idx= -1;
+	    while(r< n && c>=0){
+	        if(arr[r][c]== 1){
+	            c--;
+	            idx= r;
 	        }
-	       // cout<<c<<" "<<endl;
-	        if(maxi<c){
-	           maxi= c;
-	           idx= i;
-	           //cout<<idx<<" "<<endl;  
+	        else if(arr[r][c]==0){
+	            r++;
 	        }
 	    }
 	    return idx;
+	    
 	}
 
 };
