@@ -11,20 +11,20 @@ public:
 	// largest elements
 	int print2largest(int arr[], int n) {
 	    // code here
-	    int l=INT_MIN,sl=INT_MIN+1;
+	    int maxi=INT_MIN;
+	    int smaxi= INT_MIN;
 	    
 	    for(int i=0;i<n;i++){
-	        if(arr[i]> l ){
-	            sl =l;
-	            l= arr[i];
-	            
+	        if(arr[i]> maxi){
+	            smaxi= maxi;
+	            maxi = arr[i];
 	        }
-	        else if(arr[i] <l && arr[i]> sl){
-	            sl= arr[i];
+	        else if(arr[i] > smaxi && arr[i]!= maxi){
+	            smaxi= arr[i];
 	        }
 	    }
-	    if(sl == INT_MIN || sl== INT_MIN+1) return -1;
-	    return sl;
+	    
+	    return smaxi == INT_MIN ? -1 : smaxi;
 	}
 };
 
