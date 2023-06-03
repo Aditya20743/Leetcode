@@ -1,30 +1,33 @@
 class Solution {
 public:
     int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
-        int steps= 0;
-        vector<int> adj[n];
-        vector<int> vis(n,0);
+        
+        vector<vector<int>> subordinates(n);
+        
         for(int i=0;i<manager.size();i++){
             if(manager[i]!= -1){
-                adj[manager[i]].push_back(i);    
+                subordinates[manager[i]].push_back(i);
             }
         }
+        
         queue<pair<int,int>> q;
-        q.push({headID, 0});
-        vis[headID]=1;
+        
+        q.push({headID,0});
+        
+        int max_time=0;
         
         while(!q.empty()){
-            int step= q.front().second;
-            int senior= q.front().first;
+            int employee= q.front().first;
+            int curr_time= q.front().second;
+            
             q.pop();
-            steps =max(step, steps);
-            for(auto it: adj[senior]){
-                if(!vis[it]){
-                    vis[it]=1;
-                    q.push({it,step + informTime[senior]});
-                }
+            
+            max_time= max(curr_time, max_time);
+            
+            for(auto subordinate: subordinates[employee]){
+                q.push({subordinate, curr_time+ informTime[employee]});
             }
         }
-        return steps;
+        return max_time;
     }
 };
