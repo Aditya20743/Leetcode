@@ -3,6 +3,7 @@ public:
     void helper(int csum , int idx, vector<int>& candidates, int target, vector<vector<int>>& ans ,vector<int>&v ){
         if( csum == target){
             ans.push_back(v);
+            return;
         }
         else if(csum> target){
             return;
@@ -10,12 +11,14 @@ public:
         else if(idx>= candidates.size()){
             return;
         }
+        helper(csum , idx+1, candidates, target, ans,v);
         
-        for(int i= idx;i<candidates.size();i++){
-            v.push_back(candidates[i]);
-            helper(csum+candidates[i], i, candidates, target,ans,v);
-            v.pop_back();
-        }
+        
+        
+        v.push_back(candidates[idx]);
+        helper(csum+candidates[idx], idx, candidates, target,ans,v);
+        v.pop_back();
+        
 
         
     }
