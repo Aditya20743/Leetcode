@@ -6,24 +6,24 @@ using namespace std;
 class Solution
 {
 public:
-    void helper(int i,int curr, vector<int>&ans,vector<int> arr, int N ){
-        if(i== N) {
+    void helper(int idx,vector<int> arr, int N, vector<int>& ans, int curr){
+        if(idx== N){
             ans.push_back(curr);
             return;
         }
         
-        helper(i+1, curr, ans, arr, N);
-    
-        helper(i+1, curr+arr[i] , ans, arr, N);
+        helper(idx+1, arr, N, ans, curr+ arr[idx]);
         
-        
+        helper(idx+1, arr, N, ans, curr);
     }
 
     vector<int> subsetSums(vector<int> arr, int N)
     {
         // Write Your Code here
         vector<int> ans;
-        helper(0,0,ans,arr,N);
+        
+        helper(0, arr, N, ans, 0);
+        
         return ans;
     }
 };
