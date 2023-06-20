@@ -1,20 +1,20 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        int maxiprod=INT_MIN;
-        
-        int mini=1, maxi=1;
+        int maxi= 1;
+        int mini= 1;
+        int ans=INT_MIN;
         
         for(int i=0;i<nums.size();i++){
             if(nums[i]<0){
                 swap(maxi,mini);
             }
+            maxi= max(nums[i]*maxi, nums[i]);
             
-            maxi= max(maxi*nums[i], nums[i]);
-            mini= min(mini*nums[i], nums[i]);
-            
-            maxiprod= max(maxiprod, maxi);
+            mini= min(nums[i]*mini, nums[i]);
+            ans= max(ans,maxi);
+            // cout<<maxi<<" "<<mini<<endl;
         }
-        return maxiprod;
+        return ans;
     }
 };
