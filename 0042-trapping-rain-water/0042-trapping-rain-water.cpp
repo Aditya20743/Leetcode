@@ -1,58 +1,27 @@
 class Solution {
 public:
-    
     int trap(vector<int>& height) {
+        int n=height.size();
         
-        //optimised
-        // two pointer approach
-        int n= height.size();
-        int left=0,right=n-1, ans=0;
-        int lmax=0,rmax=0;
-        
-        while(left<= right){
-            if(height[left]< height[right]){
-                if(height[left]>lmax){
-                    lmax= height[left];
-                }
-                else{
-                    ans+= lmax- height[left];
-                }
-                left++;
-            }
-            else{
-                if(height[right]>rmax){
-                    rmax= height[right];
-                }
-                else{
-                    ans+= rmax- height[right];
-                }
-                right--;
-            }
-        }
-        return ans;
+        vector<int> greatest_to_left(n);
+        vector<int> greatest_to_right(n);
         
         
-        // brute/ naive approach
-//         int n= height.size();
-//         vector<int> pre,suf;
-//         int maxi=0;
-//         for(int i=0;i<n;i++){
-//             maxi=max(maxi,height[i]);
-//             pre.push_back(maxi);
-//         }
-//         maxi=0;
-//         for(int i=n-1;i>=0;i--){
-//             maxi=max(maxi,height[i]);
-//             suf.push_back(maxi);
-//         }
-//         reverse(suf.begin(),suf.end());
-//         int ans=0;
-
-//         for(int i=0;i<n;i++){
+        int ans=0;
+        greatest_to_left[0]= height[0];
+        greatest_to_right[n-1]= height[n-1];
+        
+        for(int i=1;i<n;i++){
+            greatest_to_left[i]= max(greatest_to_left[i-1], height[i]);
             
-//             ans+= min(suf[i],pre[i])-height[i];
-//         }
-//         return ans;
+            greatest_to_right[n-i-1]=max(greatest_to_right[n-i],height[n-i-1]);
+        }
         
+        for(int i=0;i<n;i++){
+            ans+= min(greatest_to_left[i], greatest_to_right[i])- height[i];
+        }
+        
+        return ans;
+   
     }
 };
