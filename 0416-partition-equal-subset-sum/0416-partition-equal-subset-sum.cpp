@@ -1,35 +1,36 @@
 class Solution {
 public:
-    bool helper(int i,int curr,int sum,vector<int>&nums, vector<vector<int>>&dp){
-        int n=nums.size();
-        
+    bool helper(int idx, int curr, vector<int>&nums, int sum, vector<vector<int>>&dp){
         if(curr>sum)    return false;
         
-        if(i==n-1 ){
-            if(curr== sum)  return true;
-            else return false;
+        if(curr==sum)   return true;
+        
+        if(idx==nums.size()){
+            return false;
         }
-        if(dp[i][curr]!=-1)   return dp[i][curr];
+        if(dp[idx][curr]!= -1)   return dp[idx][curr];
         
-        int take= helper(i+1, curr+nums[i], sum,nums,dp);
-        int not_take= helper(i+1, curr, sum, nums, dp);
+        int take= helper(idx+1, nums[idx]+curr, nums, sum,dp);
+        int not_take= helper(idx+1, curr, nums,sum,dp);
         
-        return dp[i][curr]= take || not_take;
-    }
-    
-    bool check(int sum, vector<int>&nums){
-        int n=nums.size();
-        vector<vector<int>> dp(n,vector<int>(sum+1,-1));
-
-        return helper(0,0,sum,nums,dp);
+        return dp[idx][curr]= take|not_take;
+        
+        
     }
     
     bool canPartition(vector<int>& nums) {
-        int tsum=0;
-        for(auto it: nums)  tsum+= it;
+        // => find a subsquence with sum = sum/2;
         
-        if(tsum%2==1)   return false;
+        int sum=0;
+        for(auto it: nums){
+            sum+= it;
+        }
         
-        return check(tsum/2, nums);
+        if(sum%2){
+            return false;
+        }
+        vector<vector<int>> dp(nums.size(),vector<int>(sum/2+1,-1));
+        
+        return helper(0,0, nums,sum/2 ,dp);
     }
 };
