@@ -7,7 +7,7 @@ public:
             for(int j=0;j<ans.size();j++){
                 if(strs[i][j]!= ans[j]){
                     ans.erase(ans.begin()+j,ans.end());
-                    continue;
+                    break;
                 }
             }
         }
