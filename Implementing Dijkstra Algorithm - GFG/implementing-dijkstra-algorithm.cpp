@@ -11,27 +11,35 @@ class Solution
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // Code here
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > pq;
-        vector<int> dis(V,INT_MAX);
-        dis[S]=0;
-        pq.push({0,S});
+        priority_queue<pair<int,int>, vector<pair<int,int>>, 
+        greater<pair<int,int>> > min_heap;
         
-        while(!pq.empty()){
-            int node= pq.top().second;
-            int dist= pq.top().first;
-            pq.pop();
+        vector<int> shortest_distance(V, INT_MAX);
+        
+        min_heap.push({0,S});
+        shortest_distance[S]=0;
+        
+        while(!min_heap.empty()){
+            int dis= min_heap.top().first;
+            int node= min_heap.top().second;
+            min_heap.pop();
             
             for(auto it: adj[node]){
-                int adjN= it[0];
-                int edgeW= it[1];
+                int adjnode= it[0];
+                int adjdis= it[1];
                 
-                if(dis[adjN]> dist+ edgeW){
-                    dis[adjN]= dist+ edgeW;
-                    pq.push({dis[adjN], adjN});
+                if(shortest_distance[adjnode] > adjdis + dis){
+                    shortest_distance[adjnode]= adjdis + dis;
+                    min_heap.push({shortest_distance[adjnode],adjnode});
                 }
             }
         }
-        return dis;
+        for(int i=0;i<V;i++){
+            if(shortest_distance[i]==INT_MAX){
+                shortest_distance[i]=-1;
+            }
+        }
+        return shortest_distance;
     }
 };
 
