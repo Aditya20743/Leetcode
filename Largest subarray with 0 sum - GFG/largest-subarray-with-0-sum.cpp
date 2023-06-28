@@ -12,28 +12,27 @@ class Solution{
     public:
     int maxLen(vector<int>&A, int n)
     {   
-        // Your code here 
-        int sum=0;
-        int maxi=0;
-        unordered_map<int,int>mp;
+        // Your code here
+        unordered_map<int,int> mp;
+        int prefixsum=0;
+        int ans=0;
+        mp[0]=-1;
+        
         for(int i=0;i<n;i++){
-            sum+= A[i];
             
-            if(sum==0){
-                maxi= max(maxi, i+1);
+            prefixsum+= A[i];
+            if(mp.find(prefixsum)== mp.end()){
+                mp[prefixsum]=i;
             }
+            // else if(prefixsum==0){
+            //     ans= max(ans, i);
+            // }
             else{
-                if(mp.find(sum)!= mp.end()){
-                    maxi= max( i-mp[sum], maxi);
-                }
-                else{
-                    mp[sum]=i;
-                }
+                ans= max(ans, i-mp[prefixsum]);
             }
         }
-        return maxi;
+        return ans;
     }
-    
 };
 
 
