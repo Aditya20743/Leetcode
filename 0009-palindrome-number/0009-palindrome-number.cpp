@@ -2,15 +2,11 @@ class Solution {
 public:
     bool isPalindrome(int x) {
         if(x<0) return false;
-        int y=x;
-        long long ans=0;
-        while(y>0){
-            ans= ans*10+ y%10;
-            y/=10;
-        }
-        if(ans== 1L*x){
-            return true;
-        }
-        return false;
+        string a= to_string(x);
+        string b= a;
+        reverse(b.begin(),b.end());
+        // cout<<b<<endl;
+        
+        return a==b;
     }
 };
