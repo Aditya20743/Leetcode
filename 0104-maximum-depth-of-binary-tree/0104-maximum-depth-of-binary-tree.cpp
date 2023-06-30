@@ -11,15 +11,21 @@
  */
 class Solution {
 public:
-    int helper(TreeNode* root){
-        if(!root)   return 0;
-        int l=1,r=1;
-        if(root->left)  l=1+helper(root->left);
-        if(root->right) r=1+helper(root->right);
+    int helper(TreeNode* temp){
+        int ans=0;
+        if(temp==NULL)  return 0;
         
-        return max(l,r);
+        if(temp->left){
+            ans=max(ans,helper(temp->left)+1);
+        }
+        if(temp->right){
+            ans=max(ans,helper(temp->right)+1);
+        }
+        return ans;
+        
     }
     int maxDepth(TreeNode* root) {
-        return helper(root);
+        if(!root)    return 0;
+        return helper(root)+1;
     }
 };
