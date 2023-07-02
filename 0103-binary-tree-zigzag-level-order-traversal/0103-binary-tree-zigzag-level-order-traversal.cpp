@@ -39,8 +39,6 @@ public:
             }
             left_to_right=!left_to_right;
             ans.push_back(row);
-            row.clear();
-            
         }
         return ans;
     }
