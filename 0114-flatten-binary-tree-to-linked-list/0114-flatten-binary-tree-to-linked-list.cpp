@@ -11,17 +11,21 @@
  */
 class Solution {
 public:
+    // TC O(N) SC O(N)
+    void helper(TreeNode* node, TreeNode* &prev){
+        if(!node)   return;
+        
+        helper(node->right,prev);
+        helper(node->left,prev);
+        
+        node->right= prev;
+        node->left= NULL;
+        
+        prev= node;
+    }
     
-    TreeNode* prev= NULL;
     void flatten(TreeNode* root) {
-        
-        if(!root)   return ;
-        
-        flatten(root->right);
-        flatten(root->left);
-        
-        root->right= prev;
-        root->left= NULL;
-        prev= root;
+        TreeNode* prev= NULL;
+        helper(root, prev);
     }
 };
