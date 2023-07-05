@@ -11,25 +11,27 @@
  */
 class Solution {
 public:
-    void inorder_traversal(TreeNode* node, vector<int>& inorder){
-        if(!node){
-            return ;
+//     void inorder_traversal(TreeNode* node, vector<int>& inorder){
+//         if(!node){
+//             return ;
+//         }
+//         inorder_traversal(node->left, inorder);
+//         inorder.push_back(node->val);
+//         inorder_traversal(node->right,inorder);
+//     }
+    bool check(TreeNode* node, long long min, long long max){
+        if(!node)   return true;
+        
+        if(!(node->val > min && node->val < max)){
+            return false;
         }
-        inorder_traversal(node->left, inorder);
-        inorder.push_back(node->val);
-        inorder_traversal(node->right,inorder);
+        
+        return check(node->left, min, node->val)&&check(node->right, node->val, max);
     }
     
     bool isValidBST(TreeNode* root) {
-        vector<int> inorder;
+        if(root==NULL)  return true;
         
-        inorder_traversal(root,inorder);
-        
-        for(int i=0;i<inorder.size()-1;i++){
-            if(inorder[i]>=inorder[i+1]){
-                return false;
-            }
-        }
-        return true;
+        return check(root,LONG_MIN, LONG_MAX);
     }
 };
