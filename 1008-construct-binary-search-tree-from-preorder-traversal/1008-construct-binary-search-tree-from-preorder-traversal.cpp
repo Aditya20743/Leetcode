@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode* buildBST(int &idx, vector<int> preorder, int ub){
+    TreeNode* buildBST(int &idx, vector<int> &preorder, int ub){
         if(idx== preorder.size() || preorder[idx]> ub)  return NULL;
         
         TreeNode* temp= new TreeNode(preorder[idx++]);
