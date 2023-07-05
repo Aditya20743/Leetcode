@@ -12,12 +12,18 @@
 class Solution {
 public:
     TreeNode* helper(TreeNode* node){
+        // if left not there directly return right and vice verse  // visualize
+        
         if(!node->left){
             return node->right;
         }
         else if(!node->right){
             return node->left;
         }
+        
+        // if both present attach right child to left ke last right child 
+        // visualize when deleting
+        
         TreeNode* right_child= node->right;
         TreeNode* last_right= findLastRight(node->left);
         
@@ -25,7 +31,9 @@ public:
         
         return node->left;
     }
+
     TreeNode* findLastRight(TreeNode* temp){
+        //find the last right node of temp bst;
         if(temp->right==NULL){
             return temp;
         }
@@ -36,12 +44,16 @@ public:
         if(!root)   return root;
         if(root->val== key)     return helper(root);
         
+        // helper ftn => modify the node where key is present
+        
         TreeNode* temp= root;
         
+        // find the node with key and pass in helper ftn;
         while(temp){
             if(temp->val > key){
                 if(temp->left && temp->left->val ==key){     
                     temp->left= helper(temp->left);
+                    // join the modified node with temp->left;
                     break;
                 }
                 else
@@ -61,6 +73,13 @@ public:
     }
 };
     
+    
+    
+    
+    
+
+
+//WRONG
 //     void helper(TreeNode* root, int key){
 //         if(!root)   return ;
         
