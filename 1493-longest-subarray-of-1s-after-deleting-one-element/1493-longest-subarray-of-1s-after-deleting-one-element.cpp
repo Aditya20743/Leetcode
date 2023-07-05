@@ -1,32 +1,21 @@
 class Solution {
 public:
     int longestSubarray(vector<int>& nums) {
+        int i=0, j=0;
+        int last_idxz=-1;
+        int ans=0;
         
-        int n = nums.size(); // size of nums
-        int i = 0; // sliding window starting point
-        int ans = 0;  // ans variable stores ans
-        int cnt_0 = 0; // keeps track of no of zeros in current window
-        int cumm_sum = 0; // ** cumm_sum of sliding window
-        
-        for(int j = 0 ; j < n ; j++){
+        while(j<nums.size()){
             
-            if(nums[j] == 1)
-              cumm_sum++; // adding in window
-            else{
-                cnt_0++;
+            if(nums[j]==0){
+                i= last_idxz+1;
+                last_idxz=j;
             }
-            while(cnt_0 > 1){
-                  cumm_sum = cumm_sum - nums[i]; // removing from window
-                  if(nums[i] == 0){
-                      cnt_0--;
-                  }
-                 i++;
-            }
-            ans = max(ans,cumm_sum);
+            ans= max(ans, j-i);
+            j++;
         }
-        if( ans == n)
-            ans--;
         
+        if(ans==nums.size())    ans--;
         return ans;
     }
 };
