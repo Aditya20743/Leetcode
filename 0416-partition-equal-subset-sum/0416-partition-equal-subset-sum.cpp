@@ -29,8 +29,35 @@ public:
         if(sum%2){
             return false;
         }
-        vector<vector<int>> dp(nums.size(),vector<int>(sum/2+1,-1));
+        vector<vector<bool>> dp(nums.size()+1,vector<bool>(sum/2+1,false));
         
-        return helper(0,0, nums,sum/2 ,dp);
+        sum =sum/2 ;
+        for(int i=nums.size()-1;i>=0;i--){
+            for(int j=sum;j>=0;j--){
+                if(j==sum){
+                    dp[i][j]=true;
+                }
+                else{
+                    int take= false, not_take=dp[i+1][j];
+                
+                    if(j+nums[i]<= sum){
+                        take= dp[i+1][j+nums[i]];
+                    }
+                
+                    dp[i][j]= take | not_take;
+                }
+                
+            }
+        }
+        
+         // for(int i=nums.size()-1;i>=0;i--){
+         //    for(int j=sum;j>=0;j--){
+         //        cout<<dp[i][j]<<" ";
+         //    }
+         //     cout<<endl;
+         // }
+        return dp[0][0];
+        
+        // return helper(0,0, nums,sum/2 ,dp);
     }
 };
