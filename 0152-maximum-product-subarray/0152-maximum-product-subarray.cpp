@@ -1,20 +1,34 @@
 class Solution {
 public:
-    int maxProduct(vector<int>& nums) {
-        int maxi= 1;
-        int mini= 1;
-        int ans=INT_MIN;
-        
-        for(int i=0;i<nums.size();i++){
-            if(nums[i]<0){
-                swap(maxi,mini);
-            }
-            maxi= max(nums[i]*maxi, nums[i]);
-            
-            mini= min(nums[i]*mini, nums[i]);
-            ans= max(ans,maxi);
-            // cout<<maxi<<" "<<mini<<endl;
+    void helper(int i, vector<int>&nums, int curr, int& maxi){
+        if(i== nums.size()){
+            return ;
         }
-        return ans;
+        maxi =max(maxi, curr);
+        
+        helper(i+1, nums, 1, maxi);
+        
+        helper(i+1, nums, curr*nums[i], maxi);
+        
+    }
+    int maxProduct(vector<int>& nums) {
+        int maxi= INT_MIN;
+        // helper(0, nums, 1, maxi);
+        
+        int prefix=1, suffix= 1;
+        int n= nums.size();
+        
+        for(int i=0;i<n;i++){
+            
+            if(prefix==0)   prefix=1;
+            if(suffix==0)   suffix=1;
+            
+            prefix= prefix* nums[i];
+            suffix= suffix* nums[n-1-i];
+            
+            maxi= max(maxi, max(prefix, suffix));
+        }
+        
+        return maxi;
     }
 };
