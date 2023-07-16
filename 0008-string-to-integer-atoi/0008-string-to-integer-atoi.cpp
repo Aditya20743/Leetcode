@@ -1,33 +1,34 @@
 class Solution {
-    long atoi(string s, int sign, int i, long result) {
-        if(sign*result>=INT_MAX){
-            return INT_MAX;
-        }
-        if(sign*result<=INT_MIN){
-            return INT_MIN;
-        }
-        if(i>=s.size()|| s[i]<'0' || s[i]>'9'){
-            return sign*result;
-        }
-        
-       
-        result=atoi(s,sign,i+1,(result*10+(s[i]-'0')));
-        
-        return result;
-    }
-
 public:
     int myAtoi(string s) {
+        int i=0, n=s.size();
+        long long ans=0;
+        bool f=true;
         
-        int i = 0, n = s.size(), sign = 1;
-        while (i < n && s[i] == ' '){
-            ++i;
+        while(i<n){
+            while(i<n && s[i]==' '){
+                i++;
+            }
+            if(s[i]=='-'){
+                f=false;
+                i++;
+            }
+            else if(s[i]=='+'){
+                i++;
+            }
+            while(i<n && s[i]>='0' && s[i]<='9'){
+                // cout<<ans<<endl;
+                
+                ans= ans*10+ (s[i]-'0');
+                if(ans >= INT_MAX && f== true)   return INT_MAX;
+                if(ans > INT_MAX && f==false)   return INT_MIN;
+                i++;
+            }
+            if(f==false)
+                return -1*(int)ans;
+            else
+                return (int)ans;
         }
-        if (s[i] == '-')
-            sign = -1, ++i;
-        else if (s[i] == '+')
-            ++i;
-        
-        return atoi(s, sign, i, 0);
+        return ans;
     }
 };
