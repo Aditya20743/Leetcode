@@ -8,11 +8,13 @@ public:
         }
         int c=0;
         for(int i=0;i<left;i++){
-            c+= mp[i];
+            if(mp.find(i)!= mp.end())
+                c+= mp[i];
         }
         
         for(int i=left;i<=right;i++){
-            c+= mp[i];
+            if(mp.find(i)!= mp.end())
+                c+= mp[i];
             if(c==0) return false;
         }
         
