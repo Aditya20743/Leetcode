@@ -29,7 +29,7 @@ public:
     
     void setZeroes(vector<vector<int>>& matrix) {
         
-        // O() time complexity && O(1) Space Complexity
+        // O(mn) time complexity && O(1) Space Complexity
         
         int m= matrix.size();
         int n= matrix[0].size();
@@ -51,6 +51,8 @@ public:
         for(int i=1;i<m;i++){
             for(int j=1;j<n;j++){
                 if(matrix[i][j]==0){
+                    // whenever we find zero, mark [i][0] and [0][j] as zero then 
+                    // then wherever [i][0]=0 or [0][j]=0 mark [i][j]=0;
                     matrix[i][0]=0;
                     matrix[0][j]=0;
                 }
