@@ -18,13 +18,15 @@ public:
             temp=temp->next;
             n++;
         }
+        // linked to head 
         temp->next= head;
 
         k= k%n;
         k= n-k;
         
-        cout<<k<<endl;
-        while(k--){
+        temp = head;
+        // cout<<k<<endl;
+        while(--k){
             temp=temp->next;
         }
         t= temp->next;
