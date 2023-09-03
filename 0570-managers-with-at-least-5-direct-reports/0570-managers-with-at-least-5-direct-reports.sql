@@ -14,3 +14,10 @@ having count(e.id)>=5
 # on e.managerId=m.id
 # group by e.managerId 
 # having count(e.id)>=5
+
+
+# select name from employee 
+# where id in 
+# (select managerId from Employee
+# group by managerId
+# having count(managerId)>=5) 
