@@ -66,11 +66,14 @@ public:
             if(same_num<=k){
                 ans= (ans *power(last_num, same_num))%mod;
                 k-= same_num;
+                // normal multiplication
+
             }
             else{
-                ans= (ans* power(last_num, k))%mod;
                 ans= (ans* nCr(same_num, k))%mod;
+                ans= (ans* power(last_num, k))%mod;
                 k=0;
+                // multiply and ncr
             }
         }
         return ans;
