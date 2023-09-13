@@ -32,7 +32,7 @@ public:
             }
         }
         int count=0;
-        for(auto it: ans)   cout<<it<<" " ,count+= it;
+        for(auto it: ans)   count+= it;
         return count;
     }
 };
