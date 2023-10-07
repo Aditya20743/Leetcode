@@ -12,16 +12,18 @@ public:
     int minEatingSpeed(vector<int>& piles, int h) {
         long long ul= *max_element(piles.begin(),piles.end()), ll= 1;
         long long mid=0;
+        int ans=0;
         while(ul>= ll){
-            mid= (ul+ll)/2;
+            mid= ll+ (ul-ll)/2;
             
             if(check(mid,piles,h)){
                 ul = mid-1;
+                ans= mid;
             }
             else{
                 ll= mid+1;
             }
         }
-        return ul+1;
+        return ans;
     }
 };
