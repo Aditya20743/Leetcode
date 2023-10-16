@@ -30,9 +30,10 @@ public:
         
         ListNode* temp= head;
         ListNode* prev= NULL;
+        ListNode* nxt= NULL;
         
         while(temp){
-            ListNode* nxt= temp->next;
+            nxt= temp->next;
             
             temp->next= prev;
             
