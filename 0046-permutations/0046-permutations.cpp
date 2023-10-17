@@ -1,14 +1,10 @@
 class Solution {
 public:
-    void helper(int idx, vector<int>&nums, vector<vector<int>>& ans, vector<int>&v,
+    void helper( vector<int>&nums, vector<vector<int>>& ans, vector<int>&v,
                unordered_map<int,int>& mp){
         
         if(v.size()== nums.size()){
             ans.push_back(v);
-            return;
-        }
-       
-        if(idx>= nums.size()){
             return;
         }
         
@@ -22,7 +18,7 @@ public:
                 v.push_back(nums[i]);
                 mp[nums[i]]++;
                 
-                helper(i, nums, ans, v,mp);
+                helper(nums, ans, v,mp);
                 
                 mp[nums[i]]--;
                 v.pop_back();
@@ -37,7 +33,7 @@ public:
         vector<int> v;
         unordered_map<int,int> mp;
         
-        helper(0,nums,ans,v,mp);
+        helper(nums,ans,v,mp);
         
         return ans;
     }
