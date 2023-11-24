@@ -14,7 +14,7 @@ public:
     int helper(TreeNode* node, int i,unordered_map<TreeNode*, unordered_map<int,int>>&mp){
         if(node== NULL) return 0;
         
-        if(mp[node][i])     return mp[node][i];
+        if(mp[node].find(i)!= mp[node].end())     return mp[node][i];
         if(i==0){
             int l=0;
             int r=0;
