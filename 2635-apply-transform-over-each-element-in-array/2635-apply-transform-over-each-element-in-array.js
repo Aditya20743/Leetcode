@@ -7,7 +7,7 @@ var map = function(arr, fn) {
     const returnedArray =[];
     
     arr.forEach((ele, index)=>{
-        returnedArray[index] = fn(arr[index], index);
+        returnedArray[index] = fn(ele, index);
     })
     
     // for(let i=0;i<arr.length;i++){
