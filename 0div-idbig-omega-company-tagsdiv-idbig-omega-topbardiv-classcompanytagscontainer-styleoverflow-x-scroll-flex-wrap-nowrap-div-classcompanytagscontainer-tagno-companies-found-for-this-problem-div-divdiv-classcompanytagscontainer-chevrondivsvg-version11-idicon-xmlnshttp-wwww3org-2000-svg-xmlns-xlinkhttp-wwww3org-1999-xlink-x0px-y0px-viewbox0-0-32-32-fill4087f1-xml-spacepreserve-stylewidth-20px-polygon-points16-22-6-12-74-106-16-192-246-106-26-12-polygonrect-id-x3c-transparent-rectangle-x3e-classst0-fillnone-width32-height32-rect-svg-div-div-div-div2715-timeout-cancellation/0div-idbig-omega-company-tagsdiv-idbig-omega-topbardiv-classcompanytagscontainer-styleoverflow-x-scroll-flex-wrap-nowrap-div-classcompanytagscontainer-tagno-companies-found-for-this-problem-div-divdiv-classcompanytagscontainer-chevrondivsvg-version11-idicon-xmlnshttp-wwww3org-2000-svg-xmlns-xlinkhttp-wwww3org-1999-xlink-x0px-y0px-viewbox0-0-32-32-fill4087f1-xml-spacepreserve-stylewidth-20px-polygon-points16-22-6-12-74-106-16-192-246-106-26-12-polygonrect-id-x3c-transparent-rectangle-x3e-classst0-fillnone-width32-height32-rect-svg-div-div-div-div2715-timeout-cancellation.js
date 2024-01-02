@@ -12,11 +12,11 @@ var cancellable = function(fn, args, t) {
         clearTimeout(timer);
     }
     
-    let a = function(){
-        fn(...args);
-    }
+//     let a = function(){
+//         fn(...args);
+//     }
     
-    let timer= setTimeout(a, t);
+    let timer= setTimeout(()=>{fn(...args)}, t);
     
     return cancelfn;
 };
