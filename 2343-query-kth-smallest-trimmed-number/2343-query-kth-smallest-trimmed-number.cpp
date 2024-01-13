@@ -5,7 +5,8 @@ public:
         
         for(auto it: q){
             
-            vector<pair<string,int>> v;
+            
+            priority_queue<pair<string,int>> pq;
             for(int i=0;i<a.size();i++){
                 string s="";
     
@@ -13,14 +14,19 @@ public:
                     s+=a[i][j];
                 }
                 // cout<<nm<<" ";
-                v.push_back({s, i});
+                pq.push({s, i});
             }
             // cout<<endl;
+            int c= pq.size()-it[0];
             
-            sort(v.begin(),v.end());
+            while(c){
+                pq.pop();
+                c--;
+            }
+            
             
             // cout<<it[0]-1<<" ";
-            ans.push_back(v[it[0]-1].second);
+            ans.push_back(pq.top().second);
         }
         
         return ans;
