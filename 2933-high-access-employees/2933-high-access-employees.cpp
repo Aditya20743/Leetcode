@@ -1,5 +1,15 @@
 class Solution {
 public:
+    static bool cmp(vector<string> a, vector<string> b){
+        if(a[0]>b[0]){
+            return false;
+        }
+        else if(a[0]<b[0])  return true;
+        
+        else {
+            return a[1]<b[1];
+        }
+    }
     int time(string s){
         int res=0,hr=0;
         
@@ -10,10 +20,12 @@ public:
     
         return  res;
     }
+    
+    
     vector<string> findHighAccessEmployees(vector<vector<string>>& a) {
         vector<string> ans;
         
-        sort(a.begin(), a.end());
+        sort(a.begin(), a.end(), (cmp));
         
         unordered_map<string, int> mp;
         
