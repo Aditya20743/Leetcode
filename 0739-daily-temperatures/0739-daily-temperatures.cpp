@@ -6,20 +6,16 @@ public:
         
         for(int i=temp.size()-1;i>=0;i--){
             
+            while(!st.empty() && st.top().first<=temp[i]){
+                st.pop();
+            }
             if(st.empty()){
                 ans[i]=0;
             }
-            else {
-                while(!st.empty() && st.top().first<=temp[i]){
-                    st.pop();
-                }
-                if(st.empty()){
-                    ans[i]=0;
-                }
-                else{
-                    ans[i]= st.top().second-i;
-                }
+            else{
+                ans[i]= st.top().second-i;
             }
+            
             st.push({temp[i], i});
             
         }
