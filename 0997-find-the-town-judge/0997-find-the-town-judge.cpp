@@ -1,18 +1,24 @@
 class Solution {
 public:
     int findJudge(int n, vector<vector<int>>& trust) {
-        int indeg[n+1];
-        int outdeg[n+1];
-        for(int i=0;i<=n;i++)    indeg[i]=0;
-        for(int i=0;i<=n;i++)    outdeg[i]=0;
         
-        for(int i=0;i<trust.size();i++){
-            outdeg[trust[i][0]]++;
-            indeg[trust[i][1]]++;
+        if(n==1 && trust.size()==0)    return 1;
+        
+        unordered_map<int,int> indeg,outdeg;
+        int tj=-1;
+        for(auto it: trust){
+            indeg[it[1]]++;
+            outdeg[it[0]]++;
+            if(indeg[it[1]]== n-1){
+                tj= it[1];
+            }
+            
         }
-        for(int i=1;i<n+1;i++){
-            if(indeg[i]== n-1 && outdeg[i]== 0) return i;
+        
+        if(outdeg[tj]==0){
+            return tj;
         }
         return -1;
+        
     }
 };
