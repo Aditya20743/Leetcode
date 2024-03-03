@@ -16,10 +16,10 @@ public:
         if(!head){
             return head;
         }
-       
         while(temp1 && n--){
             temp1=temp1->next;
         }
+        
         if(!temp1)  return head->next;
         
         while(temp1->next){
