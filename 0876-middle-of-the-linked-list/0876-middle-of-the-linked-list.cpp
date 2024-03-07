@@ -13,11 +13,8 @@ public:
     ListNode* middleNode(ListNode* head) {
         
         
-        if(!head->next || !head){
+        if(!head->next ){
             return head;
-        }
-        else if(!head->next->next){
-            return head->next;
         }
         
         
