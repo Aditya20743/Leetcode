@@ -1,48 +1,44 @@
 class Solution {
 public:
-    int leastInterval(vector<char>& tasks, int n) {
+    int leastInterval(vector<char>& tasks, int p) {
+        int n = tasks.size();
+        unordered_map<char, int> mp;
         
-        map<char,int> mp;
-        int maxfreq=0;
-        for(int i=0;i<tasks.size();i++){
-            mp[tasks[i]]++;
-            maxfreq= max(maxfreq,mp[tasks[i]]);
+        for(char &ch : tasks) {
+            mp[ch]++;
         }
-        int count=0;
-        for(auto it: mp){
-            if(it.second== maxfreq) count++;
+
+        priority_queue<int> pq; //max heap
+        //we want to finish the process which is most occurring (having highest frequency)
+        //so that we don't have to finish in the last with p gaps.
+        int time = 0;
+        
+        for(auto &it : mp) {
+            pq.push(it.second);
         }
-        return max( (int)tasks.size(), (maxfreq-1)*(n+1)+count );
         
-        
-        
-        
-        
-//         int z= tasks.size();
-//         unordered_map<char,int> mp;
-//         for(int i=0;i<z;i++){
-//             mp[tasks[i]]++;
-//         }
-//         int time=0;
-//         map<char,pair<char,int>> s;
-//             vector<int> ini[mp.size()];
-//             while(mp.size()!=0){
-                
+        while(!pq.empty()) {
+            vector<int> temp;
+            for(int i = 1; i<=p+1; i++) {
+                //filling first p+1 characters
+                if(!pq.empty()) {
+                    temp.push_back(pq.top()-1); //finishing one instance of each process
+                    pq.pop();
+                }
+            }
             
-//             for(int i=0;i<z;i++){
-//                 ini[tasks[i]].push_back(s[tasks[i]].second);
-//                 cout<< ini<<" "<<s[tasks[i]].second<<" "<<time<<" "<<mp.size()<<endl;
-//                 if( time-ini[0]>=n || s[tasks[i]].second==0)
-//                 {
-//                     mp[tasks[i]]--;
-//                     if(mp[tasks[i]]==0) mp.erase(tasks[i]);
-//                     // s.erase(tasks[i]);
-//                     s[tasks[i]]= {tasks[i],time};
-                    
-//                 }
-//                 time++;
-//             }
-//             }
-//         return time;
+            for(int &freq : temp) {
+                if(freq > 0)
+                    pq.push(freq);
+            }
+            
+            if(pq.empty()) //all processes finished
+                time += temp.size();
+            else
+                time += (p+1); //we finished p+1 tasks above in the loop
+            
+        }
+        
+        return time;
     }
 };
