@@ -1,44 +1,65 @@
 class Solution {
 public:
-    int leastInterval(vector<char>& tasks, int p) {
-        int n = tasks.size();
-        unordered_map<char, int> mp;
-        
-        for(char &ch : tasks) {
-            mp[ch]++;
+    int leastInterval(vector<char>& tasks, int n) {
+        int max_freq=0, sz=tasks.size();
+        int freq[26]={0};
+        for(char c: tasks){
+            int f=++freq[c-'A'];
+            max_freq=max(max_freq, f);
         }
-
-        priority_queue<int> pq; //max heap
-        //we want to finish the process which is most occurring (having highest frequency)
-        //so that we don't have to finish in the last with p gaps.
-        int time = 0;
-        
-        for(auto &it : mp) {
-            pq.push(it.second);
-        }
-        
-        while(!pq.empty()) {
-            vector<int> temp;
-            for(int i = 1; i<=p+1; i++) {
-                //filling first p+1 characters
-                if(!pq.empty()) {
-                    temp.push_back(pq.top()-1); //finishing one instance of each process
-                    pq.pop();
-                }
+        int num_maxFreq=0;
+        for(int i=0;i<26;i++){
+            if(freq[i]==max_freq){
+                num_maxFreq++;
             }
-            
-            for(int &freq : temp) {
-                if(freq > 0)
-                    pq.push(freq);
-            }
-            
-            if(pq.empty()) //all processes finished
-                time += temp.size();
-            else
-                time += (p+1); //we finished p+1 tasks above in the loop
-            
         }
         
-        return time;
+        int time=(max_freq-1)*(n+1)+num_maxFreq;
+        return max(time, sz);
     }
 };
+
+// class Solution {
+// public:
+//     int leastInterval(vector<char>& tasks, int p) {
+//         int n = tasks.size();
+//         unordered_map<char, int> mp;
+        
+//         for(char &ch : tasks) {
+//             mp[ch]++;
+//         }
+
+//         priority_queue<int> pq; //max heap
+//         //we want to finish the process which is most occurring (having highest frequency)
+//         //so that we don't have to finish in the last with p gaps.
+//         int time = 0;
+        
+//         for(auto &it : mp) {
+//             pq.push(it.second);
+//         }
+        
+//         while(!pq.empty()) {
+//             vector<int> temp;
+//             for(int i = 1; i<=p+1; i++) {
+//                 //filling first p+1 characters
+//                 if(!pq.empty()) {
+//                     temp.push_back(pq.top()-1); //finishing one instance of each process
+//                     pq.pop();
+//                 }
+//             }
+            
+//             for(int &freq : temp) {
+//                 if(freq > 0)
+//                     pq.push(freq);
+//             }
+            
+//             if(pq.empty()) //all processes finished
+//                 time += temp.size();
+//             else
+//                 time += (p+1); //we finished p+1 tasks above in the loop
+            
+//         }
+        
+//         return time;
+//     }
+// };
