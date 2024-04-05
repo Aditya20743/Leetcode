@@ -8,7 +8,6 @@ public:
         }
         for(int i=2;i<numRows;i++){
             for(int j=1;j<=i-1;j++){
-                if(j>0 )
                 ans[i][j]= ans[i-1][j]+ ans[i-1][j-1];
             }
         }
