@@ -4,18 +4,12 @@ public:
         int n= tickets.size();
         int ans=0;
         
-        int j=0;
-        while(j<n ){
-            for(int i=0;i<tickets.size();i++){
-                if(tickets[i]<=0){
-                    continue;
-                }
-                
-                tickets[i]--;
-                ans++;
-                if(tickets[k] == 0){
-                    return ans;
-                }
+        for(int i=0;i<n;i++){
+            if(i>k){
+                ans+= min(tickets[i], tickets[k]-1);
+            }
+            else{
+                ans+= min(tickets[i], tickets[k]);
             }
         }
         return ans;
