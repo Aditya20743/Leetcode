@@ -11,17 +11,17 @@
  */
 class Solution {
 public:
-    void sumN(TreeNode* t, vector<int>& v,int &cur){
+    void sumN(TreeNode* t,int &cur,int &sum){
         if(!t)  return ;
         
         cur= cur*10+ t->val;
-        if(!t->left && !t->right) {v.push_back(cur); return;}
+        if(!t->left && !t->right) {sum+= cur; return;}
         
-        sumN(t->left,v,cur);
+        sumN(t->left,cur,sum);
         if(t->left)
             //cout<<cur<<"-curr ";
             cur= cur/10;
-        sumN(t->right,v,cur);
+        sumN(t->right,cur,sum);
         if(t->right)
             cur=cur/10;
         //cur= cur/10;
@@ -29,13 +29,9 @@ public:
     }
     int sumNumbers(TreeNode* root) {
         vector<int> v;
-        int cur=0;
-        sumN(root,v,cur);
-        int sum=0;
-        for(auto it: v){
-            sum+= it;
-            cout<<it<<" ";
-        }
+        int cur=0,sum=0;
+        sumN(root,cur,sum);
+        
         return sum;
     }
 };
