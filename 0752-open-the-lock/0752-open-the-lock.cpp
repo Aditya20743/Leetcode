@@ -1,12 +1,5 @@
 class Solution {
 public:
-    // turns the ith digit of s in forward and backward direction and returns the turned string as vector
-vector<string> turn(string s, int i) {
-	vector<string> res(2, s);
-	res[0][i] = '0' + (res[0][i] - '0' + 1) % 10;        // forward turn
-	res[1][i] = '0' + (res[1][i] - '0' - 1 + 10) % 10;   // backward turn
-	return res;
-}
     int openLock(vector<string>& deadends, string target) {
 	unordered_set<string> dead(begin(deadends), end(deadends)), seen({"0000"});
 	if(dead.find("0000") != end(dead)) return -1; // if start string itself is a deadend
@@ -27,5 +20,11 @@ vector<string> turn(string s, int i) {
 	}
 	return -1;
 }
+// turns the ith digit of s in forward and backward direction and returns the turned string as vector
+vector<string> turn(string s, int i) {
+	vector<string> res(2, s);
+	res[0][i] = '0' + (res[0][i] - '0' + 1) % 10;        // forward turn
+	res[1][i] = '0' + (res[1][i] - '0' - 1 + 10) % 10;   // backward turn
+	return res;
+}
 };
-    
