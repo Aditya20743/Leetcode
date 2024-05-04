@@ -16,8 +16,7 @@ public:
             
             if(nr>=0 && nr<m && nc>=0 && nc<n ){
                 if(vis[nr][nc]==0 && image[nr][nc]==original_col){
-                    //image[nr][nc]=col;
-                    //vis[nr][nc]=1;
+                    
                     
                     dfs(nr,nc,col,image,vis, original_col);
                 }
@@ -30,7 +29,6 @@ public:
         int m= image.size();
         int n= image[0].size();
         
-        //int original= 
         
         if(color== image[sr][sc]){
             return image;
